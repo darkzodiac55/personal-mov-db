@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Favorite Movies</title>
+  <link rel="stylesheet" href="assets/styles/app.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+  <script src="assets/scripts/app.js" defer></script>
+</head>
+
+<body>
+  <div id="backdrop" class=""></div>
+  <div class="modal" id="add-modal">
+    <div class="modal__content">
+      <label for="title">Movie Title</label>
+      <input type="text" name="title" id="title" />
+      <label for="year">Year of Release</label>
+      <input type="number" min="1900" name="year" id="year" />
+      <label for="image-url">Image URL</label>
+      <input type="text" name="imageUrl" id="imageUrl" />
+      <label for="rating">Your Rating</label>
+      <input type="number" step="1" max="5" min="1" name="rating" id="rating" />
+
+    </div>
+    <div class="modal__actions">
+      <span class="added">✓ Added</span>
+      <button class="btn btn--passive">Cancel</button>
+      <button class="btn btn--success">Add</button>
+    </div>
+  </div>
+  <div class="modal" id="delete-modal">
+    <h2 class="modal__title">Are you sure?</h2>
+    <p class="modal__content">
+      Are you sure you want to delete this item? This action can't be made
+      undone!
+    </p>
+    <div class="modal__actions">
+      <button class="btn btn--passive">No (Cancel)</button>
+      <button class="btn btn--danger">Yes</button>
+    </div>
+  </div>
+
+  <header>
+    <h1>Favorite Movies</h1>
+    <div class="grower">
+      <button>ADD MOVIE</button>
+    </div>
+    <button class="magot">CLEAR ALL</button>
+    <button class="filler">TEMPLATES</button>
+  </header>
+
+  <main>
+    <section id="entry-text" class="card">
+      <p>Your personal movie database!</p>
+    </section>
+    <div class="sorter">
+      <button id="sortBtnL" class="sortBtn">Low > High</button>
+      <button id="sortBtnH" class="sortBtn">High > Low</button>
+      <span style="text-align: center; font-size: 0.9rem;">Sort:</span>
+
+    </div>
+    <ul id="movList" class="card">
+    </ul>
+  </main>
+  <footer></footer>
+  <div class="fcont">
+    <span id="leti">I</span>.G
+ </div>
+</body>
+
+</html>
