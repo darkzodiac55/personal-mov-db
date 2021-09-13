@@ -26,7 +26,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0 2.5rem;
-  background: #00329e5d;
+  background: linear-gradient(to left, #ffd89b, #19547b);;
 }
 
 header h1 {
@@ -379,7 +379,7 @@ input:focus {
 
 body {
   min-height: 100vh;
-  background-color: #aec6f810;
+  background-color: #e8f4ff;
 }
 
 body::after {
