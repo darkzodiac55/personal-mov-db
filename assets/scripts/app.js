@@ -245,7 +245,8 @@ function createTemplates() {
     hideTitle()
 }
 templates.addEventListener('click', createTemplates)
+createTemplates()
 
-movList.style.visibility = 'hidden'
+/* movList.style.visibility = 'hidden' */
 
 
