@@ -442,8 +442,8 @@ footer {
 }
 
 #readme {
-  width: 60vw;
-  height: 70vh;
+  width: 50vw;
+  height: 50vh;
   background-color: rgba(56, 51, 51, 0.959);
   border-radius: 20px;
   margin: auto;
@@ -462,6 +462,8 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
   
 }
 
