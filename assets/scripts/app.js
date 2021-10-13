@@ -10,6 +10,7 @@ let sortBtnL = document.getElementById('sortBtnL')
 let welcome = document.getElementById('entry-text')
 let added = document.querySelector('.added')
 let templates = document.querySelector('.filler')
+let popup = document.querySelector('#readme')
 
 let movListArr = []
 
@@ -205,6 +206,10 @@ let maxer = sorter.bind(this, 'high')
 
 sortBtnH.addEventListener('click', maxer)
 sortBtnL.addEventListener('click', miner)
+
+popup.children[0].addEventListener('click',(e)=>{
+    popup.classList.add('hidden')
+})
 
 function redraw(arr) {
     /* while (movList.childElementCount > 0) {
