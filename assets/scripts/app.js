@@ -231,15 +231,18 @@ function redraw(arr) {
     }
 }
 
-function createTemplates() {
+async function createTemplates() {
     let tempArr = []
-    tempArr.push({ order: 1, title: "Forrest Gump", url: "https://m.media-amazon.com/images/I/31M9F+VrAWL._AC_.jpg", rating: "4", year: "1994" },
+    let response = await fetch('http://localhost:5000/templates')
+    let data = await response.json()
+    console.log(data);
+    /* tempArr.push({ order: 1, title: "Forrest Gump", url: "https://m.media-amazon.com/images/I/31M9F+VrAWL._AC_.jpg", rating: "4", year: "1994" },
         { order: 1, title: "The Big Lebowski", url: "https://i.pinimg.com/564x/94/c0/25/94c02573dec058d69b22512abd21f1ba.jpg", rating: "5", year: "1998" },
         { order: 1, title: "Ghost in the Shell", url: "https://d3tvwjfge35btc.cloudfront.net/Assets/39/608/L_p0151960839.jpg", rating: "3", year: "1995" }
 
 
-    )
-    const [forr, big, ghst] = tempArr
+    ) */
+    const [forr, big, ghst] = data
     createMov(forr)
     createMov(big)
     createMov(ghst)
