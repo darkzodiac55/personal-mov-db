@@ -61,17 +61,31 @@ function btnActions(e) {
         vals.imageUrl.value = ''
         vals.rating.value = ''
         movAdderCounter++
+        uploadMov(addMov)
     }
 
 }
 modBtns.addEventListener('click', btnActions)
 
 function usrMov(order, title, url, rating, year) {
+    this.id = Math.random()
     this.order = order
     this.title = title
     this.url = url
     this.rating = rating
     this.year = year
+}
+
+async function uploadMov(mov) {
+    let response = await fetch('http://localhost:5000/usrmovs', {
+        method : 'POST',
+        headers : {
+            'Content-type' : 'application/json'
+        },
+        body : JSON.stringify({nmov: mov})
+    })
+    let data = await response.json()
+    console.log(data);
 }
 
 function addConfirm() {
@@ -165,17 +179,21 @@ movList.addEventListener('click', function (e) { ///////// solution 2 - event de
     }
     let toDel = tgt.parentElement.innerText
     movListArr.forEach(function (ele, index) {
-        if (toDel.toLowerCase().includes(ele.title.toLowerCase())) {
+        if (toDel.toLowerCase().includes(ele.title.toLowerCase())) {  
+            if (ele.id) {
+                delRequester(ele.id) //////del request to server
+            }
             movListArr.splice(index, 1)
+            
         }
     })
-    console.log(movListArr);
+    
     tgt.parentElement.remove()
     if (movList.childElementCount == 0) {
         movList.style.visibility = 'hidden'
         movList.parentElement.prepend(welcome)
     }
-
+    console.log(movListArr);
 })
 
 function sorter(direction) {
@@ -207,7 +225,7 @@ let maxer = sorter.bind(this, 'high')
 sortBtnH.addEventListener('click', maxer)
 sortBtnL.addEventListener('click', miner)
 
-popup.children[0].addEventListener('click',(e)=>{
+popup.children[0].addEventListener('click', (e) => {
     popup.classList.add('hidden')
 })
 
@@ -231,29 +249,64 @@ function redraw(arr) {
     }
 }
 
-async function createTemplates() {
-    let tempArr = []
-    let response = await fetch('http://localhost:5000/templates')
-    let data = await response.json()
+async function createTemplates() {  ////try catch here
+    let data = []
+    try {
+        let response = await fetch('http://localhost:5000/templates')
+        data = await response.json()
+    } catch (error) {
+        console.log(error);
+        console.log('could not retrieve from server, using defaults');
+        data.push({ order: 1, title: "Forrest Gump", url: "https://m.media-amazon.com/images/I/31M9F+VrAWL._AC_.jpg", rating: "4", year: "1994" },
+            { order: 1, title: "The Big Lebowski", url: "https://i.pinimg.com/564x/94/c0/25/94c02573dec058d69b22512abd21f1ba.jpg", rating: "5", year: "1998" },
+            { order: 1, title: "Ghost in the Shell", url: "https://d3tvwjfge35btc.cloudfront.net/Assets/39/608/L_p0151960839.jpg", rating: "3", year: "1995" }
+        )
+    }
     console.log(data);
-    /* tempArr.push({ order: 1, title: "Forrest Gump", url: "https://m.media-amazon.com/images/I/31M9F+VrAWL._AC_.jpg", rating: "4", year: "1994" },
-        { order: 1, title: "The Big Lebowski", url: "https://i.pinimg.com/564x/94/c0/25/94c02573dec058d69b22512abd21f1ba.jpg", rating: "5", year: "1998" },
-        { order: 1, title: "Ghost in the Shell", url: "https://d3tvwjfge35btc.cloudfront.net/Assets/39/608/L_p0151960839.jpg", rating: "3", year: "1995" }
-
-
-    ) */
     const [forr, big, ghst] = data
-    createMov(forr)
+    data.map(ele=>createMov(ele))
+    /* createMov(forr)
     createMov(big)
-    createMov(ghst)
+    createMov(ghst) */
     movListArr.push(forr, big, ghst)
     /* for (const obj of movListArr) {
         createMov(obj)
     } */
     hideTitle()
 }
+
+async function getUserMovs() {
+    let data = []
+    try {
+        let response = await fetch('http://localhost:5000/usrmovs')
+        data = await response.json()
+        if (data.length < 1) {
+            console.log('no usr movies');
+            return
+        }
+        console.log(data);
+        data.map(ele=>createMov(ele))
+        data.map(ele=>movListArr.push(ele))
+    } catch (error) {
+        console.log(error);
+        console.log('could not retrieve from server');
+    }
+}
+
+async function delRequester(id) {
+    let response = await fetch(`http://localhost:5000/usrmovs/${id}`, {
+        method : 'DELETE',
+        headers : {
+            'Content-type' : 'application/json'
+        },
+    })
+    let data = await response.json()
+    console.log(data);
+}
+
 templates.addEventListener('click', createTemplates)
 createTemplates()
+getUserMovs()
 
 /* movList.style.visibility = 'hidden' */
 
