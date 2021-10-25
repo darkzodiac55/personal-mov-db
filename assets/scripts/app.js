@@ -78,11 +78,11 @@ function usrMov(order, title, url, rating, year) {
 
 async function uploadMov(mov) {
     let response = await fetch('http://localhost:5000/usrmovs', {
-        method : 'POST',
-        headers : {
-            'Content-type' : 'application/json'
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
         },
-        body : JSON.stringify({nmov: mov})
+        body: JSON.stringify({ nmov: mov })
     })
     let data = await response.json()
     console.log(data);
@@ -179,15 +179,15 @@ movList.addEventListener('click', function (e) { ///////// solution 2 - event de
     }
     let toDel = tgt.parentElement.innerText
     movListArr.forEach(function (ele, index) {
-        if (toDel.toLowerCase().includes(ele.title.toLowerCase())) {  
+        if (toDel.toLowerCase().includes(ele.title.toLowerCase())) {
             if (ele.id) {
                 delRequester(ele.id) //////del request to server
             }
             movListArr.splice(index, 1)
-            
+
         }
     })
-    
+
     tgt.parentElement.remove()
     if (movList.childElementCount == 0) {
         movList.style.visibility = 'hidden'
@@ -264,7 +264,7 @@ async function createTemplates() {  ////try catch here
     }
     console.log(data);
     const [forr, big, ghst] = data
-    data.map(ele=>createMov(ele))
+    data.map(ele => createMov(ele))
     /* createMov(forr)
     createMov(big)
     createMov(ghst) */
@@ -285,8 +285,8 @@ async function getUserMovs() {
             return
         }
         console.log(data);
-        data.map(ele=>createMov(ele))
-        data.map(ele=>movListArr.push(ele))
+        data.map(ele => createMov(ele))
+        data.map(ele => movListArr.push(ele))
     } catch (error) {
         console.log(error);
         console.log('could not retrieve from server');
@@ -295,9 +295,9 @@ async function getUserMovs() {
 
 async function delRequester(id) {
     let response = await fetch(`http://localhost:5000/usrmovs/${id}`, {
-        method : 'DELETE',
-        headers : {
-            'Content-type' : 'application/json'
+        method: 'DELETE',
+        headers: {
+            'Content-type': 'application/json'
         },
     })
     let data = await response.json()
@@ -305,8 +305,19 @@ async function delRequester(id) {
 }
 
 templates.addEventListener('click', createTemplates)
-createTemplates()
-getUserMovs()
+
+async function tempDisplayer() {
+    await getUserMovs()
+
+    if (movListArr.length < 1) {
+        console.log(movListArr.length);
+        createTemplates()
+    } else {
+        console.log('wat');
+    }
+}
+
+tempDisplayer()
 
 /* movList.style.visibility = 'hidden' */
 
